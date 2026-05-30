@@ -2,7 +2,9 @@
 
 [![Build Status](https://github.com/doandat943/zalo-for-linux/actions/workflows/build.yml/badge.svg)](https://github.com/doandat943/zalo-for-linux/actions/workflows/build.yml)
 
-An unofficial, community-driven port of the Zalo desktop application for **Linux only**, created by repackaging the official macOS client into a standard AppImage with integrated ZaDark.
+**Note:** I've edited a few places in this README.md compared to the original repo.
+
+An unofficial, community-driven port of the Zalo desktop application for **Linux only**, created by repackaging the official macOS client into a standard AppImage/RPM/deb with integrated ZaDark.
 
 Thanks **realdtn2** for the solution: [realdtn2/zalo-linux-unofficial-2024](https://github.com/realdtn2/zalo-linux-unofficial-2024).
 
@@ -12,12 +14,22 @@ Thanks **realdtn2** for the solution: [realdtn2/zalo-linux-unofficial-2024](http
 - **Can't make or receive calls:** The call module (`zcall`) only ships as a macOS native binary.
 - **Can't see message reactions:** You won't see reactions in the UI (no badges/counters), but reacting still works and others can see your reaction.
 - **No Photos/Videos, Files and Links on the Conversation Info panel** for some reason (you can still view images/videos, files or links normally, they just don't appear on the conversation info panel).
+- **Cannot paste image and drap & drop file** (The original repo don't mention it.)
+- **✅ Fixed: Cannot send image/video and file** - Uses `db-cross-v4` from nativelibs patch from the `Re-impl-nativelibs-linux` branch and build from this (The original repo don't mention it.)
+- **✅ Fixed: Storage capacity display in storage management** - Uses `file-utilities` and `file-ultis` form nativelibs patch from the `Re-impl-nativelibs-linux` branch and build from this (The original repo don't mention it.)
 - **✅ Fixed: Screenshot without/with Zalo window button** - Uses native Linux screenshot tools (see [issue #19](https://github.com/doandat943/zalo-for-linux/issues/19)). Supported tools: deepin-screen-recorder, spectacle, flameshot, gnome-screenshot, xfce4-screenshooter, mate-screenshot, ksnapshot, scrot. Thanks to [@hthienloc](https://github.com/hthienloc) for the solution.
 - **✅ Fixed: No title bar with minimize/maximize/close buttons** - Thanks to [@NanKillBro](https://github.com/NanKillBro) for the solution. For more details, see [issue #4](https://github.com/doandat943/zalo-for-linux/issues/4)
 - **✅ Fixed: No tray menu icon**
 - **✅ Fixed: Freeze on login screen** - Replaced macOS sqlite3 binaries with native Linux builds. See [issue #13](https://github.com/doandat943/zalo-for-linux/issues/13).
 
 This project is best suited for users who need a native-feeling Zalo client on Linux and are comfortable with the technical workarounds required for full functionality.
+
+## ⌛ Re-impl-nativelibs-linux branch status:
+- `db-cross-v4`: Send image/video and files worked, Message Synchronization don't.
+- `file-ultis` and `file-ultilities`: detect true storage.
+- `mp4thumb`: Video thumb worked.
+- `zimage` and `zjxl`: Pending.
+- Other (`zcall`,`zwalker`): `zcall` need a Qt program helper called ZaloCall. `zwalker` isn't really needed and isn't in the re-impl plan yet.
 
 ## 🌙 ZaDark Integration
 
@@ -42,6 +54,7 @@ This project includes integrated [ZaDark](https://github.com/quaric/zadark), ZaD
 
 ### Usage
 
+#### AppImage:
 We strongly recommend using **Gear Lever** to integrate the AppImage perfectly into your system menu.
 
 **Note:** Zalo for Linux comes with a built-in updater. Whenever a new release is available, you will be prompted within the Zalo app to download and apply the update seamlessly without leaving the application.
@@ -51,6 +64,27 @@ We strongly recommend using **Gear Lever** to integrate the AppImage perfectly i
 3.  Open **Gear Lever**.
 4.  Click the **"Open"** button in the top-left corner and select the `.AppImage` file you downloaded.
 5.  The app will now appear in Gear Lever. Click the **"Unlock"** button, then choose **"Move to the app menu"** to integrate it into your system's application launcher.
+
+#### RPM (Fedora-based/RHEL/CentOS):
+1.  Download the latest `.rpm` file from the [**Releases**](https://github.com/doandat943/zalo-for-linux/releases) page.
+2.  Install `.rpm` with dnf:
+```bash
+sudo dnf install Zalo-....rpm
+```
+or with rpm:
+```bash
+sudo rpm -ivh Zalo-....rpm
+```
+#### DEB (Debian/Ubuntu-based)
+1.  Download the latest `.deb` file from the [**Releases**](https://github.com/doandat943/zalo-for-linux/releases) page.
+2.  Install `.deb` with apt:
+```bash
+sudo apt install ./Zalo-....deb
+```
+or with dpkg:
+```bash
+sudo dpkg -i Zalo-....deb
+```
 
 ### Build from Source
 
@@ -74,6 +108,12 @@ git clone https://github.com/doandat943/zalo-for-linux.git
 cd zalo-for-linux
 # Then initialize or update submodules
 git submodule update --init --recursive
+
+# Switch branch to Re-impl-nativelibs-linux (option, to apply nativelibs patch)
+git switch Re-impl-nativelibs-linux
+
+# Install requirement node_modules:
+npm install
 
 # Option 1: Auto-download latest version (recommended)
 npm run main:setup
@@ -191,7 +231,7 @@ This project is not a from-scratch rewrite of Zalo. It works by:
 2.  Using `7z` to extract the `app.asar` archive, which contains the main application logic written in JavaScript.
 3.  Removing incompatible native macOS files.
 4.  Wrapping the extracted application in a minimal, Linux-compatible Electron shell.
-5.  Using `electron-builder` to package everything into a single, portable `AppImage` file.
+5.  Using `electron-builder` to package everything into a single, portable `AppImage/RPM/deb` file.
 
 ## 🐛 Troubleshooting & Debugging
 
