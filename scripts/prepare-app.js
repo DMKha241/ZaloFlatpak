@@ -233,6 +233,23 @@ async function extractAppAsar() {
   } catch (e) {
     console.error('❌ Failed to patch sqlite3:', e && e.message);
   }
+
+  // Patch nativelibs (RE)
+  try {
+    const nativeLibsLinuxSrc = path.join(__dirname, '..', 'nativelibs-linux-patch');
+    const nativeLibsDest = path.join(APP_DIR, 'native', 'nativelibs');
+
+    console.log('📂 Copying additional Linux native libraries... (RE nativelibs for Linux)');
+  
+    if (fs.existsSync(nativeLibsLinuxSrc)) {
+      fs.copySync(nativeLibsLinuxSrc, nativeLibsDest, { overwrite: true });
+      console.log('✅ Successfully copied and overwrote all files to native/nativelibs!');
+    } else {
+      console.log('⚠️  Source directory "nativelibs-linux-patch" not found, skipping copy.');
+    }
+  } catch (e) {
+    console.error('❌ Failed to copy Linux native libraries:', e && e.message);
+  }
 }
 
 function commandExists(command) {
