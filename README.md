@@ -109,9 +109,6 @@ cd zalo-for-linux
 # Then initialize or update submodules
 git submodule update --init --recursive
 
-# Switch branch to Re-impl-nativelibs-linux (option, to apply nativelibs patch)
-git switch Re-impl-nativelibs-linux
-
 # Install requirement node_modules:
 npm install
 
