@@ -59,14 +59,14 @@ We strongly recommend using **Gear Lever** to integrate the AppImage perfectly i
 
 **Note:** Zalo for Linux comes with a built-in updater. Whenever a new release is available, you will be prompted within the Zalo app to download and apply the update seamlessly without leaving the application.
 
-1.  Download the latest `.AppImage` file from the [**Releases**](https://github.com/doandat943/zalo-for-linux/releases) page.
+1.  Download the latest `.AppImage` file from the [**Releases**](https://github.com/DMKha2k7/zalo-for-linux/releases) page.
 2.  Install **Gear Lever** from [Flathub](https://flathub.org/en/apps/it.mijorus.gearlever).
 3.  Open **Gear Lever**.
 4.  Click the **"Open"** button in the top-left corner and select the `.AppImage` file you downloaded.
 5.  The app will now appear in Gear Lever. Click the **"Unlock"** button, then choose **"Move to the app menu"** to integrate it into your system's application launcher.
 
 #### RPM (Fedora-based/RHEL/CentOS):
-1.  Download the latest `.rpm` file from the [**Releases**](https://github.com/doandat943/zalo-for-linux/releases) page.
+1.  Download the latest `.rpm` file from the [**Releases**](https://github.com/DMKha2k7/zalo-for-linux/releases) page.
 2.  Install `.rpm` with dnf:
 ```bash
 sudo dnf install Zalo-....rpm
@@ -76,7 +76,7 @@ or with rpm:
 sudo rpm -ivh Zalo-....rpm
 ```
 #### DEB (Debian/Ubuntu-based)
-1.  Download the latest `.deb` file from the [**Releases**](https://github.com/doandat943/zalo-for-linux/releases) page.
+1.  Download the latest `.deb` file from the [**Releases**](https://github.com/DMKha2k7/zalo-for-linux/releases) page.
 2.  Install `.deb` with apt:
 ```bash
 sudo apt install ./Zalo-....deb
