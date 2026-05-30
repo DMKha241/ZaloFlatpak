@@ -24,7 +24,7 @@ let isAppQuitting = false;
 // Plugins
 // ---------------------------------------------------------------------------
 
-const zaluxPlugin = require('./plugins/zalux');
+// const zaluxPlugin = require('./plugins/zalux');
 const screenshotPlugin = require('./plugins/screenshot');
 
 // ---------------------------------------------------------------------------
@@ -149,7 +149,7 @@ app.once('ready', () => {
   }
 
 // Register plugins
-  zaluxPlugin.register({ app, ipcMain, BrowserWindow, appDir });
+  // zaluxPlugin.register({ app, ipcMain, BrowserWindow, appDir });
   screenshotPlugin.register({ ipcMain });
 });
 
