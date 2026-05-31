@@ -25,6 +25,7 @@ Thanks **realdtn2** for the solution: [realdtn2/zalo-linux-unofficial-2024](http
 This project is best suited for users who need a native-feeling Zalo client on Linux and are comfortable with the technical workarounds required for full functionality.
 
 ## ⌛ Re-impl-nativelibs-linux branch status:
+The nativelibs patch build form: [re-impl-zalo-nativelibs-linux](https://github.com/DMKha2k7/re-impl-zalo-nativelibs-linux)
 - `db-cross-v4`: Send image/video and files worked, Message Synchronization don't.
 - `file-ultis` and `file-ultilities`: detect true storage.
 - `mp4thumb`: Video thumb worked.
