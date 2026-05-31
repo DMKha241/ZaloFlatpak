@@ -105,7 +105,7 @@ Steps:
 
 ```bash
 # Clone the repository
-git clone https://github.com/doandat943/zalo-for-linux.git
+git clone https://github.com/DMKha2k7/zalo-for-linux.git
 cd zalo-for-linux
 # Then initialize or update submodules
 git submodule update --init --recursive
@@ -140,7 +140,7 @@ The final AppImage will be in the `dist/` directory!
 | `npm run main:setup` | `SETUP=true node scripts/main.js` (check + download + prepare) |
 | `npm run main:build` | `BUILD=true node scripts/main.js` (build AppImage) |
 | `npm run start` | Runs the app in development mode |
-| `npm run build` | Builds AppImage (calls `scripts/build.js`) |
+| `npm run build` | Builds AppImage/RPM/deb (calls `scripts/build.js`) |
 | `npm run download-dmg`* | Download Zalo DMG |
 | `npm run prepare-app`* | Extract Zalo DMG |
 | `npm run prepare-zadark` | Clones and builds ZaDark assets for later integration |
