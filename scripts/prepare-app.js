@@ -169,11 +169,14 @@ async function extractAppAsar() {
   const { main: patchFileUtils } = require('./patches/patch-file-utils');
   await patchFileUtils();
 
-  const { main: patchFixImageResizeLinux } = require('./patches/patch-fix-image-resize-linux');
-  await patchFixImageResizeLinux();
+  const { main: patchZimage } = require('./patches/patch-zimage');
+  await patchZimage();
 
-  const { main: patchFixImageResizeCanvas } = require('./patches/patch-fix-image-resize-canvas');
-  await patchFixImageResizeCanvas();
+  // const { main: patchFixImageResizeLinux } = require('./patches/patch-fix-image-resize-linux');
+  // await patchFixImageResizeLinux();
+
+  // const { main: patchFixImageResizeCanvas } = require('./patches/patch-fix-image-resize-canvas');
+  // await patchFixImageResizeCanvas();
 
   const { main: patchNotificationBadge } = require('./patches/patch-notification-badge');
   await patchNotificationBadge();
