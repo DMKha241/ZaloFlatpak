@@ -1,20 +1,15 @@
-name: Build Zalo for Linux
+name: Build ZaloFlatpak
 
 on:
   schedule:
     - cron: '0 0 * * *'
   push:
     branches:
-      - main
+      - flatpak
   workflow_dispatch:
     inputs:
       zalo_version:
         description: 'Zalo Version (leave empty for latest)'
-        required: false
-        default: ''
-        type: string
-      zadark_version:
-        description: 'ZaDark Version/Tag/Commit (leave empty for latest)'
         required: false
         default: ''
         type: string
@@ -58,7 +53,6 @@ jobs:
       id: build
       env:
         ZALO_VERSION: ${{ github.event.inputs.zalo_version }}
-        ZADARK_VERSION: ${{ github.event.inputs.zadark_version }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GITHUB_REPOSITORY: ${{ github.repository }}
       run: npm run main
@@ -70,15 +64,7 @@ jobs:
         name: ${{ steps.build.outputs.original_appimage_name }}
         path: ${{ steps.build.outputs.original_appimage_file }}
         retention-days: 30
-        
-    - name: Upload ZaDark AppImage artifact
-      if: steps.build.outputs.build == 'true'
-      uses: actions/upload-artifact@v4
-      with:
-        name: ${{ steps.build.outputs.zadark_appimage_name }}
-        path: ${{ steps.build.outputs.zadark_appimage_file }}
-        retention-days: 30
-        
+
     - name: Create Release
       if: steps.build.outputs.build == 'true'
       uses: softprops/action-gh-release@v1
@@ -92,10 +78,10 @@ jobs:
 
           ```bash
           # Download the AppImage
-          wget https://github.com/${{ github.repository }}/releases/download/${{ steps.build.outputs.zalo_version }}/${{ steps.build.outputs.zadark_appimage_name }}
+          wget https://github.com/${{ github.repository }}/releases/download/${{ steps.build.outputs.zalo_version }}/${{ steps.build.outputs.original_appimage_name }}
 
           # Install with Gear Lever
-          flatpak run it.mijorus.gearlever --integrate ${{ steps.build.outputs.zadark_appimage_name }}
+          flatpak run it.mijorus.gearlever --integrate ${{ steps.build.outputs.original_appimage_name }}
           ```
 
           ## 📋 System Requirements
@@ -135,3 +121,24 @@ jobs:
             gh release delete-asset "$RELEASE_TAG" "$name" --yes
           fi
         done
+        
+    - name: Update Flatpak metadata
+      if: steps.build.outputs.build == 'true'
+      env:
+        RELEASE_TAG: ${{ steps.build.outputs.zalo_version }}
+      run: |
+        echo "Updating flatpak metadata release version"
+
+        python3 flatpak/update-release-version.py
+
+    - name: Update commit
+      uses: stefanzweifel/git-auto-commit-action@v7
+      with:
+        commit_message: "Update to ${{ steps.build.outputs.zalo_version }} [skip ci]"
+        branch: flatpak
+        tag_name: ${{ steps.build.outputs.zalo_version }}
+
+
+
+
+      
