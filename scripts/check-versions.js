@@ -25,7 +25,7 @@ async function main() {
       logger.info(`Found ${existingCombo.length} existing combinations in releases`);
 
       // Check if combination already exists
-      const targetCombo = `${targetZaloVersion}+${targetZaDarkVersion}+${targetCommit}`;
+      const targetCombo = `${targetZaloVersion}+${targetCommit}`;
       const isExist = existingCombo.includes(targetCombo);
 
       if (isExist) {
