@@ -1,7 +1,7 @@
 {
-  "name": "zalo-for-linux",
+  "name": "ZaloFlatpak",
   "version": "1.0.0",
-  "description": "Unofficial Zalo port for Linux with ZaDark integration",
+  "description": "Unofficial Zalo port for Linux",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -16,20 +16,19 @@
   },
   "keywords": [
     "zalo",
-    "zadark",
     "chat",
     "messaging",
     "linux"
   ],
-  "author": "doandat943",
+  "author": "DMKha",
   "license": "MIT",
-  "homepage": "https://github.com/doandat943/zalo-for-linux",
+  "homepage": "https://github.com/DMKha241/ZaloFlatpak.git",
   "repository": {
     "type": "git",
-    "url": "https://github.com/doandat943/zalo-for-linux.git"
+    "url": "https://github.com/DMKha241/ZaloFlatpak.git"
   },
   "bugs": {
-    "url": "https://github.com/doandat943/zalo-for-linux/issues"
+    "url": "https://github.com/DMKha241/ZaloFlatpak/issues"
   },
   "devDependencies": {
     "@electron/asar": "^4.0.1",
@@ -39,7 +38,7 @@
     "sqlite3": "^6.0.1"
   },
   "build": {
-    "appId": "com.zalo.linux",
+    "appId": "io.github.DMKha241.ZaloFlatpak",
     "productName": "Zalo",
     "directories": {
       "output": "dist"
@@ -48,18 +47,18 @@
       "main.js",
       "package.json",
       "plugins/**/*",
-      "assets/**/*"
-    ],
-    "extraFiles": [
+      "assets/**/*",
       {
         "from": "app",
-        "to": "app",
+        "to": ".",
         "filter": [
           "**/*",
           "!node_modules",
           "!package-lock.json"
         ]
       }
+    ],
+    "extraFiles": [
     ],
     "asarUnpack": [
       "**/*.node"
@@ -69,11 +68,14 @@
     "npmRebuild": false,
     "linux": {
       "executableName": "zalo",
-      "target": "AppImage",
+      "target": [
+        "flatpak",
+        "AppImage"
+      ],
       "category": "Network",
       "desktop": {
         "entry": {
-          "StartupWMClass": "zalo"
+          "StartupWMClass": "Zalo"
         }
       },
       "synopsis": "Zalo messaging app for Linux",

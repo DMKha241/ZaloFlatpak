@@ -26,16 +26,9 @@ async function main() {
       logger.warn('package.json.bak not found, version will be unknown');
     }
 
-    // Phase 1: Build original Zalo
+    // Build original Zalo
     logger.step('PHASE 1: Building Zalo (Original)');
     await build('(Original)', '');
-
-    // Phase 2: Apply ZaDark integration and build final product
-    logger.step('PHASE 2: Building Zalo (with ZaDark)');
-
-    // Patch ZaDark directly into APP_DIR
-    await integrateZaDark();
-    await build('(with ZaDark)', '-ZaDark');
 
     // Final summary
     logger.step('BUILD SUMMARY');
@@ -44,7 +37,7 @@ async function main() {
         logger.info(`${type} • ${name} (${sizeStr})`);
       });
     } else {
-      logger.warn('No AppImage files were built in this run');
+      logger.warn('No Flatpak files were built in this run');
     }
   } catch (error) {
     logger.error('Main workflow failed:', error.message);
@@ -52,66 +45,20 @@ async function main() {
   }
 }
 
-async function integrateZaDark() {
-  logger.info('Applying ZaDark patches...');
-
-  try {
-    // Verify ZaDark module is available
-    const zadarkModulePath = path.join(BASE_DIR, 'plugins', 'zadark', 'build', 'pc', 'zadark-pc.js');
-    if (!fs.existsSync(zadarkModulePath)) {
-      throw new Error('ZaDark PC module not found - run "npm run prepare-zadark" first');
-    }
-
-    const zadarkPC = require(zadarkModulePath);
-    zadarkPC.copyZaDarkAssets(BASE_DIR);
-    zadarkPC.writeIndexFile(BASE_DIR);
-    zadarkPC.writeBootstrapFile(BASE_DIR);
-    zadarkPC.writePopupViewerFile(BASE_DIR);
-    logger.success('ZaDark patches applied successfully');
-
-  } catch (error) {
-    logger.error('ZaDark integration failed:', error.message);
-    logger.info('Continuing with original app directory...');
-  }
-}
-
 async function build(buildName = '', outputSuffix = '') {
   try {
-    // Get git commit hash for filename
-    const commitHash = execSync('git rev-parse --short HEAD', { encoding: 'utf8' }).trim();
 
     // Set artifact name and build command based on build type
     let artifactName;
     let buildCommand;
-    let zadarkVersion = null;
 
-    if (outputSuffix === '-ZaDark') {
-      // Read ZaDark version for custom naming
-      const zadarkPackagePath = path.join(BASE_DIR, 'plugins', 'zadark', 'package.json');
-      zadarkVersion = 'unknown';
+    artifactName = `Zalo-${ZALO_VERSION}.AppImage`;
+    buildCommand = `npx electron-builder --linux AppImage --config.linux.artifactName="${artifactName}" -c.extraMetadata.version=${ZALO_VERSION} --publish=never`;
+    logger.info(`Building ${buildName} with Zalo: ${ZALO_VERSION}`);
 
-      if (fs.existsSync(zadarkPackagePath)) {
-        try {
-          const zadarkPackage = JSON.parse(fs.readFileSync(zadarkPackagePath, 'utf8'));
-          zadarkVersion = zadarkPackage.version;
-        } catch (error) {
-          logger.warn('Could not read ZaDark version, using "unknown"');
-        }
-      }
-
-      artifactName = `Zalo-${ZALO_VERSION}+ZaDark-${zadarkVersion}-${commitHash}.AppImage`;
-      buildCommand = `npx electron-builder --linux --config.linux.artifactName="${artifactName}" -c.extraMetadata.version=${ZALO_VERSION} --publish=never`;
-      logger.info(`Building ${buildName} with Zalo: ${ZALO_VERSION}, ZaDark: ${zadarkVersion}, Commit: ${commitHash}`);
-    } else {
-      artifactName = `Zalo-${ZALO_VERSION}-${commitHash}.AppImage`;
-      buildCommand = `npx electron-builder --linux --config.linux.artifactName="${artifactName}" -c.extraMetadata.version=${ZALO_VERSION} --publish=never`;
-      logger.info(`Building ${buildName} with Zalo: ${ZALO_VERSION}, Commit: ${commitHash}`);
-    }
     // Write build-info.json to the app directory so the AppImage will contain its metadata
     const buildInfo = {
       version: ZALO_VERSION,
-      zadarkVersion: outputSuffix === '-ZaDark' ? zadarkVersion : null,
-      commit: commitHash,
       buildDate: new Date().toISOString()
     };
     
