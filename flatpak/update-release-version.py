@@ -29,14 +29,15 @@ def main() -> None:
         "            </description>\n"
         "        </release>\n"
     )
+
     updated, count = re.subn(
-        r"(?m)^(\s*</releases>)$", release + r"\1", contents, count=1
+        r"(?m)^(\s*<releases>)$", r"\1\n" + release.rstrip("\n"), contents, count=1
     )
     if count != 1:
-        sys.exit(f"Could not find <releases> closing tag in {METainfo}.")
+        sys.exit(f"Could not find <releases> opening tag in {METainfo}.")
 
     METainfo.write_text(updated, encoding="utf-8")
-    print(f"Added release {version}.")
+    print(f"Added release {version} to releases.")
 
 
 if __name__ == "__main__":
