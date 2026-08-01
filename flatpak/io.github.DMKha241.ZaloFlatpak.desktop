@@ -2,10 +2,9 @@
 Type=Application
 Name=Zalo
 Comment=Unofficial port of Zalo messaging application for Linux systems.
-Icon=/app/share/icons/hicolor/512x512/apps/io.github.DMKha241.ZaloFlatpak.png
-TryExec=/home/dmkha/AppImages/zalo.appimage
-Exec=env DESKTOPINTEGRATION=1 /app/bin/ZaloFlatpak %U
+Icon=io.github.DMKha241.ZaloFlatpak
+Exec=env DESKTOPINTEGRATION=1 zalo %U
 Terminal=false
 Categories=Network;
-StartupWMClass=zalo
+StartupWMClass=Zalo
 
