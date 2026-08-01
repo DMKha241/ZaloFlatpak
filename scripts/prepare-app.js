@@ -195,6 +195,9 @@ async function extractAppAsar() {
 
   const { main: patchShellOpenLinux } = require('./patches/patch-shell-open-linux');
   await patchShellOpenLinux();
+
+  const { main: nativelibsOptimizer } = require('./utils/nativelibs-optimizer');
+  await nativelibsOptimizer();
 }
 
 function commandExists(command) {
