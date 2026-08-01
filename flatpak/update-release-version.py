@@ -9,7 +9,7 @@ from pathlib import Path
 from xml.sax.saxutils import escape, quoteattr
 
 
-METainfo = Path("flatpak/io.github.DMKha241.ZaloFlatpak.metainfo.xml")
+METainfo = Path("flatpak/io.github.DMKha241.zalo-for-linux.metainfo.xml")
 
 
 def main() -> None:
