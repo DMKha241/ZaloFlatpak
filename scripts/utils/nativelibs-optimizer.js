@@ -1,6 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
-const logger = require('./utils/logger');
+const logger = require('./logger');
 
 const APP_DIR = path.join(__dirname, '..', '..', 'app');
 const APP_NATIVELIBS = path.join(APP_DIR, 'native', 'nativelibs')
