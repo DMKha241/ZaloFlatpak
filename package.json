@@ -1,5 +1,5 @@
 {
-  "name": "ZaloFlatpak",
+  "name": "zalo-for-linux",
   "version": "1.0.0",
   "description": "Unofficial Zalo port for Linux",
   "main": "main.js",
@@ -23,13 +23,13 @@
   ],
   "author": "DMKha",
   "license": "MIT",
-  "homepage": "https://github.com/DMKha241/ZaloFlatpak.git",
+  "homepage": "https://github.com/DMKha241/zalo-for-linux.git",
   "repository": {
     "type": "git",
-    "url": "https://github.com/DMKha241/ZaloFlatpak.git"
+    "url": "https://github.com/DMKha241/zalo-for-linux.git"
   },
   "bugs": {
-    "url": "https://github.com/DMKha241/ZaloFlatpak/issues"
+    "url": "https://github.com/DMKha241/zalo-for-linux/issues"
   },
   "devDependencies": {
     "@electron/asar": "^4.0.1",
@@ -40,7 +40,7 @@
     "sqlite3": "^6.0.1"
   },
   "build": {
-    "appId": "io.github.DMKha241.ZaloFlatpak",
+    "appId": "io.github.DMKha241.zalo-for-linux",
     "productName": "Zalo",
     "directories": {
       "output": "dist"
